@@ -9,6 +9,9 @@ import StartGame from './startGame';
 import Game from './game';
 import Result from './result';
 import NotFound from './notFound';
+
+import { connect } from 'react-redux';
+
 import './App.scss';
 
 class App extends Component {
@@ -17,6 +20,7 @@ class App extends Component {
     return (
       <div className='container'>
         <Switch>
+          <Route path='/' element={(!this.props.isLogin) ? <Login /> : <StartGame />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/start' element={<StartGame />} />
@@ -29,4 +33,12 @@ class App extends Component {
   }
 }
 
-export default App;
+
+const mapStateToProps = (store) => {
+  return {
+    isLogin: store.isLogin
+  };
+};
+
+
+export default connect(mapStateToProps)(App);
