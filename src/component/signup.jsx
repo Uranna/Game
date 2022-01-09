@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { Link, Navigate } from "react-router-dom";
+import { connect } from 'react-redux';
+import { clearAction } from "../store/reducer";
+import { fetchSignup } from "../store/async";
 import Input from "./input";
 
 class Signup extends Component {
@@ -10,8 +13,20 @@ class Signup extends Component {
     this.changeValue = this.changeValue.bind(this);
   }
 
+  componentDidMount() {
+    this.props.clear()
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.message !== this.props.message) {
+      this.setState({ email: "", name: '', password: '', password_confirmation: '' })
+    }
+  }
+
   submitForm(e) {
     e.preventDefault()
+    this.props.signup({ ...this.state });
+
   }
 
   changeValue(target) {
@@ -22,6 +37,7 @@ class Signup extends Component {
   render() {
     return (
       <>
+        {(this.props.isLogin) ? <Navigate to="/start" from="/signup" /> : null}
         <nav className="nav nav--right">
           <Link to="/login">
             <h2 className="nav__item">Войти</h2>
@@ -35,6 +51,7 @@ class Signup extends Component {
             <Input type="password" name="password" placeholder="Пароль" classes="" value={this.state.password} change={this.changeValue} />
             <Input type="password" name="password_confirmation" placeholder="Повторите пароль" classes="" value={this.state.password_confirmation} change={this.changeValue} />
 
+            <p>{this.props.message}</p>
             <button type="submit" className="btn">Зарегистрироваться</button>
           </form>
         </main>
@@ -44,5 +61,18 @@ class Signup extends Component {
   }
 }
 
+const mapStateToProps = (store) => {
+  return {
+    isLogin: store.isLogin,
+    message: store.message
+  };
+};
 
-export default Signup;
+const mapDispatchToProps = dispatch => {
+  return {
+    signup: formData => dispatch(fetchSignup(formData)),
+    clear: () => dispatch(clearAction())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
