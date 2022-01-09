@@ -1,0 +1,285 @@
+$light-gray: #E4E2E7;
+$gray: #D1CFD0;
+$light-red: #BD484E;
+$red: #621A1E;
+$dark-gray: #35423B;
+
+#root {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 60rem;
+  width: 100%;
+  padding: 2rem;
+  font-size: 1.4rem;
+}
+
+.container {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.6rem;
+  text-transform: uppercase;
+
+  &--left {
+    background: linear-gradient(-135deg, $light-gray 50%, white 50%);
+  }
+
+  &--right {
+    background: linear-gradient(135deg, $light-gray 50%, white 50%);
+  }
+  
+  &__item {
+    font-size: 1.6rem;
+    padding: 1rem 1.5rem;
+    color: lighten($color: $dark-gray, $amount: 10%);
+
+    &--active {
+      color: $dark-gray;
+    }
+
+    &:hover {
+      color: $dark-gray;
+    }
+  }
+}
+
+.main-content {
+  padding: 2rem;
+}
+
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  column-gap: 2rem;
+  row-gap: 2rem;
+
+
+  &--horizontal {
+    flex-direction: row;
+
+    & .btn {
+      margin: 0;
+    }
+  }
+
+  &__message {
+    &--error {
+      color: $light-red;
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+.game {
+  &__question {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  &__timer {
+    text-align: center;
+  }
+
+  &__box-answers {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 1rem;
+  }
+}
+
+
+.result {
+
+  &__title {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.6rem;
+    &>.result__points {
+      color: $red;
+    }
+  }
+
+  &__table {
+    border: none;
+    border-spacing: 0;  
+    width: 100%;
+  }
+
+  &__header-table {
+    background: $dark-gray;
+    color: white;
+    & th {
+      padding: 0.7rem 1rem;
+      text-transform: uppercase;
+      width: 30%;
+    }
+  }
+
+  &__tr {
+    border-bottom: 1px solid $dark-gray;
+    &>td {
+      text-align: center;
+    padding: 0.7rem 1rem;
+    border-bottom: 1px solid $dark-gray;
+    font-weight: 600;
+
+    }
+    &:nth-child(2n){
+      background: $light-gray;
+    }
+
+    &--error {
+      color: $light-red !important;
+      background: lighten($light-red, 35%) !important;
+
+    }
+  }
+
+  &__td {
+    text-align: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid $dark-gray;
+    &--error {
+      background: $light-red;
+    }
+  }
+}
+
+
+.btn {
+  border: none;
+  padding: 1rem 3rem;
+  background: $dark-gray;
+  color: white;
+  cursor: pointer;
+  display: block;
+  margin:  2rem auto 0;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.2rem;
+
+  &:hover {
+    background: darken($color: $dark-gray, $amount: 5%);
+  }
+
+  &:active {
+    background: darken($color: $dark-gray, $amount: 10%);
+  }
+
+  &--red {
+    background: $light-red;
+
+    &:hover {
+      background: $red;
+    }
+  
+    &:active {
+      background: darken($color: $red, $amount: 5%);
+    }
+  }
+}
+
+.select {
+  max-width: 60rem;
+  width: 100%;
+  position: relative;
+
+  &__box-select-item {
+    padding: 1rem 1.5rem;
+    border: 1px solid $gray;
+    cursor: pointer;
+
+    &:hover {
+      border-color: $dark-gray;
+    }
+  }
+
+  &__icons {
+
+    &::before,
+    &::after {
+      content: '';
+      width: 1.5rem;
+      height: 0.1rem;
+      border-radius: 1px;
+      position: absolute;
+      top: 19px;
+      background: $dark-gray;
+    }
+
+    &::before {
+      right: 20px;
+      transform: rotate(45deg);
+    }
+
+    &::after {
+      right: 10px;
+      transform: rotate(-45deg);
+    }
+  }
+
+  &__box-options {
+    display: none;
+    position: absolute;
+    z-index: 10;
+    top: 5rem;
+    background: white;
+    width: 100%;
+  }
+
+  &__item-option {
+    padding: 1rem 1.5rem;
+    border: 1px solid $gray;
+    cursor: pointer;
+
+    &--disabled {
+      color: $gray;
+      cursor: auto;
+    }
+
+    &--active {
+      background: $dark-gray;
+      color: white;
+    }
+
+    &:not(.select__item-option--disabled):not(.select__item-option--active):hover{
+      background: $gray;
+    }
+  }
+
+  &--active {
+    .select__box-options {
+      display: block;
+    }
+
+    .select__icons {
+      &::before{
+        transform: rotate(-45deg);
+      }
+      &::after {
+        transform: rotate(45deg);
+      }
+    }
+
+  }
+  &__bg {
+    background: $light-red;
+    opacity: 0.5;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+}
