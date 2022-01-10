@@ -24,22 +24,21 @@ export const reducer = (state = defaultState, action) => {
   switch (action.type) {
     case LOGIN: {
       if (!payload.status) return { ...state, error: payload.errors };
-      if (getStatus()) return { ...defaultState, isLogin: true };
-      return { ...defaultState }
+      return { ...defaultState, isLogin: getStatus() }
     }
 
     case SIGNUP: {
-      if (payload.status) return { ...defaultState, message: payload.data.message };
+      if (payload.status) return { ...defaultState, isLogin: getStatus(), message: payload.data.message };
       if (payload.errors.hasOwnProperty('password')) return { ...state, error: { ...payload.errors, password_confirmation: [''] } };
       return { ...state, error: payload.errors };
     }
     case START:
       return (payload.response.status) ? { ...state, request: payload.request, response: payload.response } : { ...state, error: payload.errors };
     case ANSWER: return (payload.status) ? { ...state, response: payload } : { ...state, error: payload.errors };
-    case CLEAR: return { ...defaultState, isLogin: state.isLogin };
+    case CLEAR: return { ...defaultState, isLogin: getStatus() };
     case LOG_OUT: {
       localStorage.removeItem('access_token');
-      return { ...defaultState, isLogin: false }
+      return { ...defaultState, isLogin: getStatus() }
     }
     case UPDATE: {
       delete state.error[payload];
