@@ -20,12 +20,12 @@ class App extends Component {
     return (
       <div className='container'>
         <Switch>
-          <Route path='/' element={(!this.props.isLogin) ? <Login /> : <StartGame />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/signup' element={<Signup />} />
-          <Route path='/start' element={<StartGame />} />
-          <Route path='/game' element={<Game />} />
-          <Route path='/result' element={<Result />} />
+          <Route exact path='/' element={(!this.props.isLogin) ? <Login /> : <StartGame />} />
+          <Route exact path='/login' element={<Login />} />
+          <Route exact path='/signup' element={<Signup />} />
+          <Route exact path='/start' element={<StartGame />} />
+          <Route exact path='/game' element={<Game />} />
+          <Route exact path='/result' element={<Result />} />
           <Route path='*' element={<NotFound />} />
         </Switch>
       </div>
